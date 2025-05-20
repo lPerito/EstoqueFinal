@@ -1,0 +1,67 @@
+{% extends 'estoque/base.html' %}
+{% block title %}Solicitações Pendentes{% endblock %}
+
+{% block content %}
+<h2 style="text-align: center; margin-bottom: 30px;">Solicitações Pendentes</h2>
+
+<table border="1" cellpadding="8" cellspacing="0" style="margin: auto; width: 95%; border-collapse: collapse;">
+  <thead style="background-color: #f2f2f2;">
+    <tr>
+      <th>ID</th>
+      <th>Produto</th>
+      <th>P/N</th>
+      <th>Quantidade</th>
+      <th>Solicitante</th>
+      <th>Base</th>
+      <th>Destino</th>
+      <th>Status</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for solicitacao in solicitacoes %}
+    <tr>
+      <td>{{ solicitacao.id }}</td>
+      <td>{{ solicitacao.nome_produto }}</td>
+      <td>{{ solicitacao.pn }}</td>
+      <td>{{ solicitacao.quantidade }}</td>
+      <td>{{ solicitacao.solicitante.username }}</td>
+      <td>{{ solicitacao.base|default:"-" }}</td>
+      <td>{{ solicitacao.destino|default:"-" }}</td>
+      <td>
+        {% if solicitacao.status == "pendente" %}
+          <span style="color: gray; font-weight: bold;">⚪ Pendente</span>
+        {% elif solicitacao.status == "em_analise" %}
+          <span style="color: orange; font-weight: bold;">🟠 Em Análise</span>
+        {% elif solicitacao.status == "aprovado" %}
+          <span style="color: green; font-weight: bold;">🟢 Aprovado</span>
+        {% endif %}
+      </td>
+      <td>
+        <form method="post" style="display: inline-block; margin-right: 5px;">
+          {% csrf_token %}
+          <input type="hidden" name="solicitacao_id" value="{{ solicitacao.id }}">
+          <select name="status">
+            <option value="pendente" {% if solicitacao.status == "pendente" %}selected{% endif %}>⚪ Pendente</option>
+            <option value="em_analise" {% if solicitacao.status == "em_analise" %}selected{% endif %}>🟠 Em Análise</option>
+            <option value="aprovado" {% if solicitacao.status == "aprovado" %}selected{% endif %}>🟢 Aprovado</option>
+          </select>
+          <button type="submit" class="btn">Atualizar</button>
+        </form>
+
+        <form method="post" action="{% url 'solicitacoes_pendentes' %}" style="display: inline-block;">
+          {% csrf_token %}
+          <input type="hidden" name="solicitacao_id" value="{{ solicitacao.id }}">
+          <input type="hidden" name="delete" value="true">
+          <button type="submit" class="btn btn-danger" style="background-color: red;">Remover</button>
+        </form>
+      </td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="9" style="text-align: center;">Nenhuma solicitação encontrada.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

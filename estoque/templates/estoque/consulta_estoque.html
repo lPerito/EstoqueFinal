@@ -1,0 +1,82 @@
+{% extends 'estoque/base.html' %}
+
+{% block content %}
+  <h2 style="text-align: center; margin-bottom: 30px;">
+    {% if base %}
+      Consulta de Estoque – {{ base }}
+    {% else %}
+      Consulta de Estoque
+    {% endif %}
+  </h2>
+
+  <form method="get" style="text-align: center; margin-bottom: 20px;">
+    {% if not base_fixa %}
+      <label for="base">Filtrar por base:</label>
+      <select name="base" id="base">
+        <option value="">Todas</option>
+        {% for b in bases %}
+          <option value="{{ b }}" {% if b == base %}selected{% endif %}>{{ b }}</option>
+        {% endfor %}
+      </select>
+      &nbsp;&nbsp;
+    {% endif %}
+
+    <label for="q">Buscar:</label>
+    <input type="text" name="q" id="q" value="{{ busca }}" placeholder="Digite nome ou P/N" style="width: 200px;">
+
+    <button type="submit">Filtrar</button>
+  </form>
+
+  <div style="text-align: center; margin-bottom: 20px;">
+    <a href="{% url 'exportar_pdf' %}" class="btn">Exportar PDF</a>
+    <a href="{% url 'exportar_csv' %}" class="btn">Exportar CSV</a>
+    <a href="{% url 'backup_dados' %}" class="btn">Backup (JSON)</a>
+  </div>
+
+  {% if produtos %}
+    <table border="1" cellpadding="8" cellspacing="0" style="margin: auto; width: 95%; border-collapse: collapse;">
+      <thead style="background-color: #f2f2f2;">
+        <tr>
+          <th>Produto</th>
+          <th>P/N</th>
+          <th>Quantidade</th>
+          <th>Estoque Mínimo</th>
+          <th>Status</th>
+          <th>Base</th>
+          <th>Local</th>
+          <th><strong>Destino</strong></th> <!-- NOVA COLUNA -->
+          <th>Observações</th>
+          <th>Histórico</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for produto in produtos %}
+          <tr {% if produto.em_alerta %}style="background-color: #ffe6e6;"{% endif %}>
+            <td>{{ produto.nome }}</td>
+            <td>{{ produto.pn }}</td>
+            <td>{{ produto.quantidade }}</td>
+            <td>{{ produto.estoque_minimo }}</td>
+            <td>
+              {% if produto.quantidade == 0 %}
+                <strong style="color: red;">COMPRAR</strong>
+              {% elif produto.em_alerta %}
+                <strong style="color: red;">Abaixo do mínimo</strong>
+              {% else %}
+                <span style="color: green;">OK</span>
+              {% endif %}
+            </td>
+            <td>{{ produto.base }}</td>
+            <td>{{ produto.local|default:"-" }}</td>
+            <td>{{ produto.destino|default:"-" }}</td> <!-- NOVA LINHA -->
+            <td>{{ produto.observacoes|default:"-" }}</td>
+            <td>
+              <a href="{% url 'historico_produto' produto.id %}" class="btn" style="padding: 5px 10px; font-size: 12px;">Ver</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p style="text-align: center;">Nenhum produto encontrado.</p>
+  {% endif %}
+{% endblock %}

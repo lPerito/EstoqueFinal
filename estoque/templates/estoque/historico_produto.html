@@ -1,0 +1,51 @@
+{% extends 'estoque/base.html' %}
+
+{% block title %}Histórico de {{ produto.nome }}{% endblock %}
+
+{% block content %}
+  <h2 style="text-align: center; margin-bottom: 30px;">
+    Histórico de Movimentações – {{ produto.nome }} (PN: {{ produto.pn }})
+  </h2>
+
+  <div style="text-align: center; margin-bottom: 20px;">
+    <strong>Estoque atual:</strong> {{ produto.quantidade }} unidades |
+    <strong>Base:</strong> {{ produto.base }}
+  </div>
+
+  {% if movimentos %}
+    <table border="1" cellpadding="8" cellspacing="0" style="margin: auto; width: 95%; border-collapse: collapse;">
+      <thead style="background-color: #f2f2f2;">
+        <tr>
+          <th>Tipo</th>
+          <th>Data</th>
+          <th>Quantidade</th>
+          <th>Usuário</th>
+          <th>Validade</th>
+          <th>Local Guardado</th>
+          <th>Destino</th>
+          <th>Observações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for m in movimentos %}
+          <tr>
+            <td>{{ m.get_tipo_display }}</td>
+            <td>{{ m.data_movimento|date:"d/m/Y H:i" }}</td>
+            <td>{{ m.quantidade }}</td>
+            <td>{{ m.usuario|default:"-" }}</td>
+            <td>{{ m.validade|date:"d/m/Y"|default:"-" }}</td>
+            <td>{{ m.local_guardado|default:"-" }}</td>
+            <td>{{ m.destino|default:"-" }}</td>
+            <td>{{ m.observacoes|default:"-" }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p style="text-align: center;">Nenhuma movimentação registrada para este produto.</p>
+  {% endif %}
+
+  <div style="text-align: center; margin-top: 30px;">
+    <a href="{% url 'consulta_estoque' %}" class="btn">&#8592; Voltar para Consulta</a>
+  </div>
+{% endblock %}

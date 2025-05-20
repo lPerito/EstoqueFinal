@@ -1,0 +1,275 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sistema de Estoque{% endblock %}</title>
+    <link rel="icon" href="{% static 'favicon.ico' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-dIeDZZS5vxQfS7Hx4wCpjvC6oMXn4YdIVRTqcuOcEMsz5K1qQEyf0Dffr5SK4v3BtNB+SEjv6R2wW4qhqkI1Uw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        :root {
+            --bg-color-light: rgba(255, 255, 255, 0.85);
+            --bg-color-dark: rgba(34, 34, 34, 0.85);
+            --text-color-light: #000;
+            --text-color-dark: #fff;
+            --menu-width: 220px;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: var(--bg-color-dark);
+            --text-color: var(--text-color-dark);
+        }
+
+        [data-theme="light"] {
+            --bg-color: var(--bg-color-light);
+            --text-color: var(--text-color-light);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            color: var(--text-color);
+            background-image: url("{% static 'estoque/img/fundo_helimarte.png' %}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-color);
+            z-index: -1;
+        }
+
+        aside {
+            width: var(--menu-width);
+            background-color: #fff;
+            padding: 20px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        aside h1 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        nav strong {
+            display: block;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        nav a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 6px 0;
+            padding: 6px 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        nav a:hover {
+            background-color: #e6e6e6;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: var(--menu-width);
+            right: 0;
+            height: 60px;
+            background-color: #000;
+            color: white;
+            padding: 10px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: left 0.3s;
+        }
+
+        header img {
+            height: 45px;
+        }
+
+        main {
+            margin-left: var(--menu-width);
+            margin-top: 60px;
+            padding: 30px;
+            transition: margin-left 0.3s;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px 0;
+            background-color: #f4f4f4;
+            font-size: 14px;
+            color: #666;
+            margin-left: var(--menu-width);
+            transition: margin-left 0.3s;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            background-color: #000;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            display: inline-block;
+            margin: 10px 0;
+        }
+
+        .btn:hover {
+            background-color: #333;
+        }
+
+        .messages {
+            margin-bottom: 20px;
+        }
+
+        .messages .success { color: green; }
+        .messages .error { color: red; }
+
+        #toggleSidebarBtn, #toggleThemeBtn {
+            position: fixed;
+            top: 10px;
+            z-index: 2000;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #toggleSidebarBtn { left: 10px; }
+        #toggleThemeBtn { right: 10px; }
+
+        @media (max-width: 768px) {
+            aside {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            header, main, footer {
+                margin-left: 0 !important;
+            }
+
+            #toggleSidebarBtn {
+                top: auto;
+                bottom: 10px;
+            }
+        }
+    </style>
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+    <button id="toggleSidebarBtn" onclick="toggleSidebar()">⇦ Esconder Menu</button>
+    <button id="toggleThemeBtn" onclick="toggleTheme()">🌗</button>
+
+    <aside id="sidebar">
+        <h1>Estoque</h1>
+        <nav>
+            <strong><i class="fas fa-warehouse"></i> Consulta de Estoque</strong>
+            <a href="{% url 'consulta_por_base' 'base-principal' %}"><i class="fas fa-plane-departure"></i> Base Principal</a>
+            <a href="{% url 'consulta_por_base' 'base-porto-velho' %}"><i class="fas fa-plane"></i> Porto Velho</a>
+            <a href="{% url 'consulta_por_base' 'base-parintins' %}"><i class="fas fa-helicopter"></i> Parintins</a>
+            <a href="{% url 'consulta_por_base' 'base-santarem' %}"><i class="fas fa-location-arrow"></i> Santarém</a>
+            <a href="{% url 'consulta_por_base' 'base-macapa' %}"><i class="fas fa-map-marker-alt"></i> Macapá</a>
+            <a href="{% url 'consulta_por_base' 'base-maraba' %}"><i class="fas fa-crosshairs"></i> Marabá</a>
+            <a href="{% url 'consulta_por_base' 'base-manaus' %}"><i class="fas fa-map-pin"></i> Manaus</a>
+
+            <strong><i class="fas fa-boxes"></i> GoodStorage</strong>
+            <a href="{% url 'consulta_por_base' 'sala-0316' %}"><i class="fas fa-box"></i> Sala 0316</a>
+            <a href="{% url 'consulta_por_base' 'sala-2320' %}"><i class="fas fa-box"></i> Sala 2320</a>
+            <a href="{% url 'consulta_por_base' 'sala-2322' %}"><i class="fas fa-box"></i> Sala 2322</a>
+
+            <strong><i class="fas fa-cogs"></i> Operações</strong>
+            <a href="{% url 'cadastrar_produto' %}"><i class="fas fa-plus-circle"></i> Cadastrar Produto</a>
+            <a href="{% url 'saida_estoque' %}"><i class="fas fa-sign-out-alt"></i> Saída de Estoque</a>
+            <a href="{% url 'historico_movimentacoes' %}"><i class="fas fa-history"></i> Histórico de Movimentações</a>
+            <a href="{% url 'solicitar_material' %}"><i class="fas fa-paper-plane"></i> Solicitar Material</a>
+            <a href="{% url 'solicitacoes_pendentes' %}"><i class="fas fa-tasks"></i> Solicitações Pendentes</a>
+            <a href="{% url 'alerta_estoque' %}"><i class="fas fa-exclamation-triangle"></i> Alerta de Estoque</a>
+
+            <strong><i class="fas fa-user"></i> Conta</strong>
+            <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Sair</a>
+        </nav>
+    </aside>
+
+    <header>
+        <img src="{% static 'logo grande.png' %}" alt="Logo Helimarte">
+        <div>Usuário: <strong>{{ request.user.username }}</strong></div>
+    </header>
+
+    <main>
+        <div class="messages">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        {% if not home %}
+            <a href="{% url 'pagina_inicial' %}" class="btn">&#8592; Página Inicial</a>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        &copy; {% now "Y" %} Helimarte. Todos os direitos reservados.
+    </footer>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const header = document.querySelector('header');
+            const main = document.querySelector('main');
+            const footer = document.querySelector('footer');
+            const button = document.getElementById("toggleSidebarBtn");
+
+            if (sidebar.style.display === "none") {
+                sidebar.style.display = "block";
+                header.style.marginLeft = "220px";
+                main.style.marginLeft = "220px";
+                footer.style.marginLeft = "220px";
+                button.textContent = "⇦ Esconder Menu";
+            } else {
+                sidebar.style.display = "none";
+                header.style.marginLeft = "0";
+                main.style.marginLeft = "0";
+                footer.style.marginLeft = "0";
+                button.textContent = "⇨ Mostrar Menu";
+            }
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const theme = html.getAttribute("data-theme") === "dark" ? "light" : "dark";
+            html.setAttribute("data-theme", theme);
+        }
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+{% extends 'estoque/base.html' %}
+
+{% block content %}
+  <h2 style="text-align: center; margin-bottom: 30px;">Cadastrar Produto</h2>
+
+  <form method="post" style="max-width: 700px; margin: 0 auto;">
+    {% csrf_token %}
+
+    <div class="form-group">
+      <label for="id_nome">Nome do Produto:</label>
+      {{ form.nome }}
+    </div>
+
+    <div class="form-group">
+      <label for="id_pn">P/N:</label>
+      {{ form.pn }}
+    </div>
+
+    <div class="form-group">
+      <label for="id_sn">S/N:</label>
+      {{ form.sn }}
+    </div>
+
+    <div class="form-group">
+      <label for="id_quantidade">Quantidade:</label>
+      {{ form.quantidade }}
+    </div>
+
+    <div class="form-group">
+      <label for="id_validade">Validade:</label>
+      {{ form.validade }}
+      {% if form.validade.help_text %}
+        <small class="form-text text-muted">{{ form.validade.help_text }}</small>
+      {% endif %}
+    </div>
+
+    <div class="form-group">
+      <label for="id_observacoes">Observações:</label>
+      {{ form.observacoes }}
+    </div>
+
+    <div class="form-group">
+      <label for="id_nome_responsavel">Nome do Responsável:</label>
+      {{ form.nome_responsavel }}
+    </div>
+
+    <div class="form-group">
+      <label for="id_base">Base:</label>
+      {{ form.base }}
+    </div>
+
+    <div class="form-group">
+      <label for="id_local">Local:</label>
+      {{ form.local }}
+    </div>
+
+    <div class="form-group">
+      <label for="id_estoque_minimo">Estoque Mínimo:</label>
+      {{ form.estoque_minimo }}
+    </div>
+
+    <div class="form-group">
+      <label for="id_destino">Destino:</label>
+      {{ form.destino }}
+    </div>
+
+    <div style="margin-top: 20px;">
+      <button type="submit" class="btn btn-primary">Salvar</button>
+      <a href="{% url 'consulta_estoque' %}" class="btn btn-secondary">Cancelar</a>
+    </div>
+  </form>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'estoque/base.html' %}
+{% block title %}Histórico de Movimentações{% endblock %}
+
+{% block content %}
+<h2 style="text-align: center; margin-bottom: 30px;">Histórico de Movimentações</h2>
+
+<table border="1" cellpadding="8" cellspacing="0" style="margin: auto; width: 95%; border-collapse: collapse;">
+  <thead style="background-color: #f2f2f2;">
+    <tr>
+      <th>Data</th>
+      <th>Produto</th>
+      <th>P/N</th>
+      <th>Tipo</th>
+      <th>Quantidade</th>
+      <th>Destino</th>
+      <th>Usuário</th>
+      <th>Observações</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for movimento in movimentos %}
+    <tr>
+      <td>{{ movimento.data_movimento|date:"d/m/Y H:i" }}</td>
+      <td>{{ movimento.produto.nome }}</td>
+      <td>{{ movimento.produto.pn }}</td>
+      <td>
+        {% if movimento.tipo == "E" %}
+          <span style="color: green;">Entrada</span>
+        {% else %}
+          <span style="color: red;">Saída</span>
+        {% endif %}
+      </td>
+      <td>{{ movimento.quantidade }}</td>
+      <td>{{ movimento.destino|default:"-" }}</td>
+      <td>{{ movimento.usuario.username|default:"-" }}</td>
+      <td>{{ movimento.observacoes|default:"-" }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="8" style="text-align: center;">Nenhum movimento registrado.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

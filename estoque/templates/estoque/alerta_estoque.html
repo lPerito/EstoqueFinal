@@ -1,0 +1,32 @@
+{% extends 'estoque/base.html' %}
+
+{% block content %}
+  <h2 style="text-align: center; margin-bottom: 30px;">⚠️ Alerta de Estoque Mínimo</h2>
+
+  {% if produtos_alerta %}
+    <table style="margin: auto; width: 90%; border-collapse: collapse;" border="1" cellpadding="8">
+      <thead style="background-color: #fdd;">
+        <tr>
+          <th>Produto</th>
+          <th>P/N</th>
+          <th>Quantidade Atual</th>
+          <th>Estoque Mínimo</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in produtos_alerta %}
+        <tr style="color: red;">
+          <td>{{ p.nome }}</td>
+          <td>{{ p.pn }}</td>
+          <td>{{ p.quantidade }}</td>
+          <td>{{ p.estoque_minimo }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p style="text-align: center; font-size: 18px; color: green;">
+      ✅ Tudo certo! Nenhum produto abaixo do estoque mínimo.
+    </p>
+  {% endif %}
+{% endblock %}
