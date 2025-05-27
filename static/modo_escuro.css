@@ -1,0 +1,188 @@
+:root {
+    --bg-light: #ffffff;
+    --bg-dark: #121212;
+    --text-light: #000000;
+    --text-dark: #f1f1f1;
+    --primary: #1e88e5;
+    --primary-hover: #1565c0;
+    --menu-bg-dark: #181818;
+    --menu-hover-dark: #333333;
+    --success: #43a047;
+    --danger: #e53935;
+    --table-bg-dark: #1e1e1e;
+    --table-row-dark: #252525;
+    --table-border-dark: #333333;
+}
+
+/* Estilo universal para tabelas no modo escuro */
+[data-theme="dark"] table {
+    background-color: #1e1e1e !important;
+    color: #f1f1f1 !important;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Cabeçalho da tabela */
+[data-theme="dark"] table th {
+    background-color: #2c2c2c !important;
+    color: #ffffff !important;
+    border: 1px solid #444 !important;
+    padding: 8px;
+}
+
+/* Células da tabela */
+[data-theme="dark"] table td {
+    background-color: #1e1e1e !important;
+    color: #f1f1f1 !important;
+    border: 1px solid #444 !important;
+    padding: 8px;
+}
+
+/* Linhas alternadas */
+[data-theme="dark"] table tr:nth-child(even) td {
+    background-color: #252525 !important;
+}
+
+/* Campos de input dentro da tabela */
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+    background-color: #2c2c2c !important;
+    color: #f1f1f1 !important;
+    border: 1px solid #555 !important;
+}
+
+/* Força fundo dos botões em modo escuro */
+[data-theme="dark"] .btn {
+    background-color: var(--primary) !important;
+    color: white !important;
+}
+
+[data-theme="dark"] .btn:hover {
+    background-color: var(--primary-hover) !important;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', sans-serif;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Menu lateral */
+aside {
+    background-color: var(--menu-bg-dark);
+    color: var(--text);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+aside nav a {
+    color: var(--text);
+    text-decoration: none;
+    display: block;
+    padding: 8px 12px;
+}
+
+aside nav a:hover {
+    background-color: var(--menu-hover-dark);
+    color: var(--primary);
+}
+
+/* Botões padrão */
+.btn {
+    background-color: var(--primary);
+    color: white;
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn:hover {
+    background-color: var(--primary-hover);
+}
+
+/* Estilo para tabelas no modo escuro */
+[data-theme="dark"] table {
+    background-color: var(--table-bg-dark) !important;
+    color: var(--text-dark) !important;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+[data-theme="dark"] table th {
+    background-color: var(--menu-hover-dark) !important;
+    color: var(--text-dark) !important;
+    border: 1px solid var(--table-border-dark);
+    padding: 10px;
+}
+
+[data-theme="dark"] table td {
+    background-color: var(--table-bg-dark) !important;
+    color: var(--text-dark) !important;
+    border: 1px solid var(--table-border-dark);
+    padding: 8px;
+}
+
+[data-theme="dark"] table tr:nth-child(even) td {
+    background-color: var(--table-row-dark) !important;
+}
+
+/* Inputs em modo escuro */
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+    background-color: #2c2c2c;
+    color: var(--text-dark);
+    border: 1px solid #555;
+}
+
+/* Mensagens e status */
+[data-theme="dark"] .success {
+    color: var(--success);
+}
+
+[data-theme="dark"] .danger {
+    color: var(--danger);
+}
+
+[data-theme="dark"] .warning {
+    color: #fbc02d;
+}
+
+/* Cabeçalho e rodapé */
+header, footer {
+    background-color: var(--menu-bg-dark);
+    color: var(--text-dark);
+    padding: 10px;
+    text-align: center;
+}
+/* Cor de fundo para linhas com alerta (ex: status "COMPRAR") */
+[data-theme="light"] .linha-alerta {
+    background-color: #ffecec;
+    color: #a70000;
+}
+
+[data-theme="dark"] .linha-alerta {
+    background-color: #3a1a1a;
+    color: #ff6b6b;
+}
+
+h2.titulo {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+    transition: color 0.3s;
+}
+
+/* Cor no modo claro */
+[data-theme="light"] h2.titulo {
+    color: var(--heading-light);
+}
+
+/* Cor no modo escuro */
+[data-theme="dark"] h2.titulo {
+    color: var(--heading-dark);
+}
+

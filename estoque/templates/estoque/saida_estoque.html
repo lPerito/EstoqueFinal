@@ -2,54 +2,63 @@
 {% block title %}Saída de Estoque{% endblock %}
 
 {% block content %}
-<h2 style="text-align: center; margin-bottom: 30px;">Saída de Estoque</h2>
+<div class="container mx-auto px-4 py-6">
+  <h2 class="text-2xl font-bold text-center mb-6">Saída de Estoque</h2>
 
-{% if messages %}
-  <div class="messages">
+  {% if messages %}
+  <div class="mb-4">
     {% for message in messages %}
-      <p class="{{ message.tags }}">{{ message }}</p>
+    <p class="text-white bg-green-600 rounded px-4 py-2 mb-2">{{ message }}</p>
     {% endfor %}
   </div>
-{% endif %}
+  {% endif %}
 
-<table border="1" cellpadding="8" cellspacing="0" style="margin: auto; width: 95%; border-collapse: collapse;">
-  <thead style="background-color: #f2f2f2;">
-    <tr>
-      <th>Produto</th>
-      <th>P/N</th>
-      <th>Quantidade</th>
-      <th>Base</th>
-      <th>Ação</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for produto in produtos %}
-    <tr>
-      <td>{{ produto.nome }}</td>
-      <td>{{ produto.pn }}</td>
-      <td>{{ produto.quantidade }}</td>
-      <td>{{ produto.base }}</td>
-      <td>
-        <form method="post" style="display: inline-block; margin-right: 10px;">
-          {% csrf_token %}
-          <input type="hidden" name="produto_id" value="{{ produto.id }}">
-          <input type="number" name="quantidade" min="1" max="{{ produto.quantidade }}" placeholder="Qtd" required style="width: 60px;">
-          <button type="submit" class="btn">Remover</button>
-        </form>
+  <div class="overflow-x-auto">
+    <table class="w-full text-sm text-left border border-gray-300 rounded-lg overflow-hidden">
+      <thead class="bg-gray-100 text-gray-800">
+        <tr>
+          <th class="px-4 py-2">Produto</th>
+          <th class="px-4 py-2">P/N</th>
+          <th class="px-4 py-2">Quantidade</th>
+          <th class="px-4 py-2">Base</th>
+          <th class="px-4 py-2 text-center">Ação</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for produto in produtos %}
+        <tr class="border-b">
+          <td class="px-4 py-2">{{ produto.nome }}</td>
+          <td class="px-4 py-2">{{ produto.pn }}</td>
+          <td class="px-4 py-2">{{ produto.quantidade }}</td>
+          <td class="px-4 py-2">{{ produto.base.nome }}</td>
+          <td class="px-4 py-2 text-center">
+            {% if produto.quantidade > 0 %}
+            <form method="post" class="inline-flex items-center space-x-2">
+              {% csrf_token %}
+              <input type="hidden" name="produto_id" value="{{ produto.id }}">
+              <input type="number" name="quantidade" min="1" max="{{ produto.quantidade }}" placeholder="Qtd"
+                class="w-16 p-1 border rounded">
+              <button type="submit" name="acao" value="remover"
+                class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-1 px-2 rounded">
+                🗑
+              </button>
 
-        <form method="post" style="display: inline-block;">
-          {% csrf_token %}
-          <input type="hidden" name="produto_id" value="{{ produto.id }}">
-          <input type="hidden" name="remover_total" value="1">
-          <button type="submit" class="btn btn-danger" style="background-color: red;">Remover Tudo</button>
-        </form>
-      </td>
-    </tr>
-    {% empty %}
-    <tr>
-      <td colspan="5" style="text-align: center;">Nenhum produto encontrado no estoque.</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+            </form>
+            {% else %}
+            <span class="text-gray-500 italic">Indisponível</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-6 text-center">
+    <a href="{% url 'pagina_inicial' %}"
+      class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded shadow">
+      ← Página Inicial
+    </a>
+  </div>
+</div>
 {% endblock %}

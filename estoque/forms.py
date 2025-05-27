@@ -2,6 +2,16 @@ from django import forms
 from .models import MovimentoEstoque, SolicitacaoMaterial, Produto
 
 
+class ImportarProdutosForm(forms.Form):
+    """Formulário simples para upload de planilha Excel (.xlsx) contendo os
+    campos: Destino, PNR, Descrição, QTD, validade, Local, Observações.
+    """
+    arquivo = forms.FileField(
+        label="Planilha Excel (.xlsx)",
+        help_text="Escolha um arquivo .xlsx gerado pelo Excel/LibreOffice. O cabeçalho deve conter: Destino, PNR, Descrição, QTD, validade, Local e Observações."
+    )
+
+
 class MovimentoEstoqueForm(forms.ModelForm):
     class Meta:
         model = MovimentoEstoque

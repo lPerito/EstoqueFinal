@@ -1,0 +1,12 @@
+{% extends 'estoque/base.html' %}
+{% block title %}Importar Planilha{% endblock %}
+
+{% block content %}
+  <h2 style="text-align:center; margin-bottom:30px;">Importar Produtos do Excel</h2>
+
+  <form method="post" enctype="multipart/form-data" style="max-width:400px;margin:auto;">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn">Importar</button>
+  </form>
+{% endblock %}
