@@ -384,3 +384,88 @@
 [data-theme="dark"] textarea::placeholder {
   color: #999 !important;
 }
+
+[data-theme="dark"] .solicitacao-card {
+  background-color: #1e1e1e !important;
+  color: var(--text-dark) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+/* Responsividade geral para telas menores */
+@media (max-width: 1200px) {
+  main {
+    padding: 20px;
+    margin-left: 0 !important;
+  }
+
+  aside {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+
+  header {
+    margin-left: 0 !important;
+    padding: 10px 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  footer {
+    margin-left: 0 !important;
+    padding: 10px;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+
+  .form-buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .btn, input[type="submit"], button {
+    width: 100%;
+  }
+
+  .form-flex {
+    padding: 16px;
+  }
+}
+
+/* Tabelas adaptáveis (mobile-friendly) */
+@media (max-width: 768px) {
+  table, thead, tbody, th, td, tr {
+    display: block;
+    width: 100%;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tr {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  td {
+    text-align: left;
+    padding-left: 50%;
+    position: relative;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #eee;
+  }
+
+  td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    top: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+    color: var(--text-color);
+  }
+}

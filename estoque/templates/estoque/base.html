@@ -13,7 +13,7 @@
     <link rel="icon" href="{% static 'favicon.ico' %}">
     <link rel="stylesheet" href="{% static 'css/modo_escuro.css' %}">
     <link rel="stylesheet" href="{% static 'css/estilo_base.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     {% endblock %}
 
@@ -33,20 +33,23 @@
         {% block sidebar %}
         <h1>Estoque</h1>
         <nav>
-            <strong><i class="fas fa-warehouse"></i> Consulta de Estoque</strong>
-            <a href="{% url 'consulta_por_base' 'base-principal' %}"><i class="fas fa-plane-departure"></i> Base
+            <strong><i class="fa-solid fa-warehouse"></i> Consulta de Estoque</strong>
+            <a href="{% url 'consulta_por_base' 'base-principal' %}"><i class="fa-solid fa-helicopter"></i> Base
                 Principal</a>
-            <a href="{% url 'consulta_por_base' 'base-porto-velho' %}"><i class="fas fa-plane"></i> Porto Velho</a>
-            <a href="{% url 'consulta_por_base' 'base-parintins' %}"><i class="fas fa-helicopter"></i> Parintins</a>
-            <a href="{% url 'consulta_por_base' 'base-santarem' %}"><i class="fas fa-location-arrow"></i> Santarém</a>
-            <a href="{% url 'consulta_por_base' 'base-macapa' %}"><i class="fas fa-map-marker-alt"></i> Macapá</a>
-            <a href="{% url 'consulta_por_base' 'base-maraba' %}"><i class="fas fa-crosshairs"></i> Marabá</a>
-            <a href="{% url 'consulta_por_base' 'base-manaus' %}"><i class="fas fa-map-pin"></i> Manaus</a>
+            <a href="{% url 'consulta_por_base' 'base-porto-velho' %}"><i class="fa-solid fa-location-dot"></i> Porto
+                Velho</a>
+            <a href="{% url 'consulta_por_base' 'base-parintins' %}"><i class="fa-solid fa-location-dot"></i>
+                Parintins</a>
+            <a href="{% url 'consulta_por_base' 'base-santarem' %}"><i class="fa-solid fa-location-dot"></i>
+                Santarém</a>
+            <a href="{% url 'consulta_por_base' 'base-macapa' %}"><i class="fa-solid fa-location-dot"></i> Macapá</a>
+            <a href="{% url 'consulta_por_base' 'base-maraba' %}"><i class="fa-solid fa-location-dot"></i> Marabá</a>
+            <a href="{% url 'consulta_por_base' 'base-manaus' %}"><i class="fa-solid fa-location-dot"></i> Manaus</a>
 
-            <strong><i class="fas fa-boxes"></i> GoodStorage</strong>
-            <a href="{% url 'consulta_por_base' 'sala-0316' %}"><i class="fas fa-box"></i> Sala 0316</a>
-            <a href="{% url 'consulta_por_base' 'sala-2320' %}"><i class="fas fa-box"></i> Sala 2320</a>
-            <a href="{% url 'consulta_por_base' 'sala-2322' %}"><i class="fas fa-box"></i> Sala 2322</a>
+            <strong><i class="fa-solid fa-warehouse"></i> GoodStorage</strong>
+            <a href="{% url 'consulta_por_base' 'sala-0316' %}"><i class="fa-solid fa-door-open"></i> Sala 0316</a>
+            <a href="{% url 'consulta_por_base' 'sala-2320' %}"><i class="fa-solid fa-door-open"></i> Sala 2320</a>
+            <a href="{% url 'consulta_por_base' 'sala-2322' %}"><i class="fa-solid fa-door-open"></i> Sala 2322</a>
 
             <strong><i class="fas fa-cogs"></i> Operações</strong>
             <a href="{% url 'cadastrar_produto' %}"><i class="fas fa-plus-circle"></i> Cadastrar Produto</a>
@@ -60,6 +63,7 @@
             <strong><i class="fas fa-user"></i> Conta</strong>
             <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Sair</a>
         </nav>
+
         {% endblock %}
     </aside>
 
